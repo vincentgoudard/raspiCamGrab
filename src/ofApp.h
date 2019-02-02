@@ -43,10 +43,15 @@ class ofApp : public ofBaseApp{
         
         bool bHide;
         
+        // shader for color adjustment
+        ofShader shader;
+        
         // for GUI
-		ofxVec2Slider scalebias;
-		ofxColorSlider color;
-		ofxLabel screenSize;
-
-		ofxPanel gui;
+        ofxVec2Slider scalebias;
+        ofxColorSlider color;
+        ofxLabel screenSize;
+        ofxPanel gui;
+        
+        //for snapshots
+        ofImage snapshot;
 };

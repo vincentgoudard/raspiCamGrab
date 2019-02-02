@@ -95,18 +95,22 @@ void ofApp::keyPressed(int key){
     //}
     
     if(key == 'h'){
-		bHide = !bHide;
-		if (bHide) {ofHideCursor();} else {ofShowCursor();}
-	}
-	else if(key == 's'){
-		gui.saveToFile("settings.xml");
-	}
-	else if(key == 'l'){
-		gui.loadFromFile("settings.xml");
-	}
-	else if(key == ' '){
-		color = ofColor(255);
-	}
+	bHide = !bHide;
+	if (bHide) {ofHideCursor();} else {ofShowCursor();}
+    }
+    else if(key == 's'){
+	    gui.saveToFile("settings.xml");
+    }
+    else if(key == 'l'){
+	    gui.loadFromFile("settings.xml");
+    }
+    else if(key == ' '){
+	    color = ofColor(255);
+    }
+    else if(key == 'x'){
+        snapshot.grabScreen(0, 0 , ofGetWidth(), ofGetHeight());
+        snapshot.save("screenshot.png");
+    }
 }
 
 //--------------------------------------------------------------
