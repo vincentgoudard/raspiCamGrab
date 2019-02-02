@@ -1,6 +1,6 @@
 # About camgrab
 
-![Screenshot of camgrab](camgrab.png)
+![Screenshot of camgrab](screenshot.png)
 
 ### What??
 
