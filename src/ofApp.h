@@ -48,7 +48,15 @@ class ofApp : public ofBaseApp{
         ofPlanePrimitive plane;
         
         // for GUI
-        ofxVec2Slider scalebias;
+        //ofxVec2Slider scalebias;
+        ofxFloatSlider _hue;
+        ofxFloatSlider _saturation;
+        ofxFloatSlider _brightness;
+        ofxFloatSlider _contrast;
+        ofxFloatSlider _planePosX;
+        ofxFloatSlider _planePosY;
+        ofxFloatSlider _planeScaleX;
+        ofxFloatSlider _planeScaleY;
         ofxColorSlider color;
         ofxLabel screenSize;
         ofxPanel gui;

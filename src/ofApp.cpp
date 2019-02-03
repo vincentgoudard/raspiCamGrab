@@ -21,16 +21,17 @@ void ofApp::setup(){
     screenY = 1200;
     paperA3ratio = 297./210.;
     camDisplayY = screenY;
-    camDisplayX = int(camDisplayY*paperA3ratio);
-    startX = int((screenX - camDisplayX)/2);
-    startY = int((screenY - camDisplayY)/2);
+    camDisplayX = int(camDisplayY*paperA3ratio); // = 1697px for a screen rez 1920x1200
+    startX = 10;//int((float(screenX - camDisplayX))/4.0);
+    startY = int((screenY - camDisplayY)/2.0); // = 0px
     
     ofBackground(0, 0, 0);
     ofHideCursor();
     
+    
+    ////////// WEBCAM SETTINGS /////////////////////
     //get back a list of devices.
     vector<ofVideoDevice> devices = vidGrabber.listDevices();
-
     for(size_t i = 0; i < devices.size(); i++){
         if(devices[i].bAvailable){
             //log the device
@@ -40,27 +41,40 @@ void ofApp::setup(){
             ofLogNotice() << devices[i].id << ": " << devices[i].deviceName << " - unavailable ";
         }
     }
-
     vidGrabber.setDeviceID(0);
     vidGrabber.setDesiredFrameRate(15);
     vidGrabber.initGrabber(camWidth, camHeight);
 
-    //videoInverted.allocate(camWidth, camHeight, OF_PIXELS_RGB);
-    //videoTexture.allocate(videoInverted);
     ofSetVerticalSync(true);
-    
-    //setting up the GUI
+
+    ////////// GUI SETTINGS /////////////////////
+
     gui.setup(); // most of the time you don't need a name
-    gui.add(scalebias.setup("scalebias", ofVec2f(1., 0.), ofVec2f(-5, -5), ofVec2f(5, 5)));
-    gui.add(color.setup("color", ofColor(100, 100, 140), ofColor(0, 0), ofColor(255, 255)));
+    gui.add(_hue.setup("hue", 0.5, 0., 1.));
+    gui.add(_saturation.setup("saturation", 1., 0., 1.));
+    gui.add(_brightness.setup("brightness", 1., 0., 2.));
+    gui.add(_contrast.setup("contrast", 1., 0., 2.));
+    gui.add(_planePosX.setup("posX", 0, -100, 100));
+    gui.add(_planePosY.setup("posY", 0, -100, 100));
+    gui.add(_planeScaleX.setup("scaleX", 1640, 800, screenX));
+    gui.add(_planeScaleY.setup("scaleY", 1200, 600, screenY));
+    // gui.add(color.setup("color", ofColor(100, 100, 140), ofColor(0, 0), ofColor(255, 255)));
     gui.add(screenSize.setup("screen size", ofToString(ofGetWidth())+"x"+ofToString(ofGetHeight())));
 
+    // load settings at startup
+    gui.loadFromFile("settings.xml");
+    // hide GUI by default
     bHide = true;
 
-    plane.set(camDisplayX, camDisplayY);   ///dimensions for width and height in pixels
-    plane.setPosition(startX, startY, 0); /// position in x y z
+    ////////// CREATE VIDEO PLANE /////////////////////
+
+    //plane.set(camDisplayX, camDisplayY);   ///dimensions for width and height in pixels
+    //plane.setPosition(-30, 50, 0); /// position in x y z
+    plane.set(_planeScaleX, _planeScaleY);   ///dimensions for width and height in pixels
+    plane.setPosition(_planePosX, _planePosY, 0); /// position in x y z
     plane.setResolution(2, 2); /// this resolution (as columns and rows) is enough
-    plane.mapTexCoords(0, 0, camWidth, camHeight);
+    //plane.mapTexCoords(0, camHeight/10, camWidth, 0);
+    
 }
 
 
@@ -68,25 +82,16 @@ void ofApp::setup(){
 void ofApp::update(){
 
     vidGrabber.update();
+    plane.set(_planeScaleX, _planeScaleY);   ///dimensions for width and height in pixels
+    plane.setPosition(_planePosX, _planePosY, 0); /// position in x y z
+    //plane.mapTexCoords(_planePosX, _planePosY, _planePosX+_planeScaleX, _planePosY+_planeScaleY);
 
-    //if(vidGrabber.isFrameNew()){
-    //    ofPixels & pixels = vidGrabber.getPixels();
-    //    for(size_t i = 0; i < pixels.size(); i++){
-            //invert the color of the pixel
-            // videoInverted[i] = 255 - pixels[i];
-	//    videoInverted[i] = (255.*scalebias->y) + int(pixels[i] * scalebias->x);
-    //    }
-        //load the inverted pixels
-    //    videoTexture.loadData(videoInverted);
-    //}
-    
-    //videoTexture = vidGrabber.getTexture();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
     
-        // bind our texture. in our shader this will now be tex0 by default
+    // bind our texture. in our shader this will now be tex0 by default
     // so we can just go ahead and access it there.
     vidGrabber.bind();
     
@@ -95,25 +100,8 @@ void ofApp::draw(){
     // and the modelView matrix
     shader.begin();
     
-    // get mouse position relative to center of screen
-    //float mousePositionX = ofMap(mouseX, 0, ofGetWidth(), 1.0, -1.0, true);
-    //float mousePositionY = ofMap(mouseY, 0, ofGetHeight(), 1.0, -1.0, true);
-
-// ajoute par VG
-// #ifndef TARGET_OPENGLES
-//    // when texture coordinates are normalised, they are always between 0 and 1.//
-//    // in GL2 and GL3 the texture coordinates are not normalised,
-//    // so we have to multiply the normalised mouse position by the plane width.
-   //mousePositionX *= ofGetWidth();
-   //mousePositionY *= ofGetHeight();
-
-// #endif
-
-
-    //shader.setUniform1f("mouseX", mousePositionX);
-    //shader.setUniform1f("mouseY", mousePositionY);
-    
-    shader.setUniform4f("rgbaGains", scalebias->x, scalebias->y, 0.5, 1.);
+    // pass the parameters
+    shader.setUniform4f("vHSVC", _hue, _saturation, _brightness, _contrast);
     shader.setUniform2f("resolution", ofGetWidth(), ofGetHeight());
 
     ofPushMatrix();
@@ -130,8 +118,9 @@ void ofApp::draw(){
     
     /////////////////////////////////////////////////////
     ofSetHexColor(0xffffff);
+    
+    // this is a shortcut if we jut do direct rendering to the window without using shaders
     // vidGrabber.draw(startX, startY, camDisplayX, camDisplayY);
-    //videoTexture.draw(startX, startY, camDisplayX, camDisplayY);
     
    	// auto draw?
 	// should the gui control hiding?
