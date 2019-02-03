@@ -45,6 +45,7 @@ class ofApp : public ofBaseApp{
         
         // shader for color adjustment
         ofShader shader;
+        ofPlanePrimitive plane;
         
         // for GUI
         ofxVec2Slider scalebias;
@@ -54,4 +55,5 @@ class ofApp : public ofBaseApp{
         
         //for snapshots
         ofImage snapshot;
+        
 };

@@ -14,6 +14,11 @@ void main()
  //   gl_FragColor = texture2D(tex0, texCoordVarying);
     //vec3 color = texture2D(tex0, (gl_FragCoord.xy + vec2(mouseX,0))/resolution.xy).rgb;
     //gl_FragColor = vec4(0.5,0.7,(mouseY/resolution.y),1)*texture2D(tex0, (gl_FragCoord.xy + vec2(mouseX,0))/resolution.xy);
-    gl_FragColor = rgbaGains*texture2D(tex0, (gl_FragCoord.xy)/resolution.xy);
+    //gl_FragColor = rgbaGains*texture2D(tex0, (gl_FragCoord.xy)/resolution.xy);
     //gl_FragColor.rgb = color;
+
+    gl_FragColor = rgbaGains*texture2D(tex0, (gl_FragCoord.xy)/resolution.xy);
+    
+    //gl_FragColor = 0.1*texture2D(tex0, (gl_FragCoord.xy)/resolution.xy);
+    
 }
