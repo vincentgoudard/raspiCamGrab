@@ -59,6 +59,8 @@ class ofApp : public ofBaseApp{
         ofxFloatSlider _planeScaleY;
         ofxColorSlider color;
         ofxLabel screenSize;
+        ofxLabel startTime;
+        ofxLabel currentTime;
         ofxPanel gui;
         
         //for snapshots

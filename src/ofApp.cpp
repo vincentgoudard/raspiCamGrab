@@ -60,6 +60,12 @@ void ofApp::setup(){
     gui.add(_planeScaleY.setup("scaleY", 1200, 600, screenY));
     // gui.add(color.setup("color", ofColor(100, 100, 140), ofColor(0, 0), ofColor(255, 255)));
     gui.add(screenSize.setup("screen size", ofToString(ofGetWidth())+"x"+ofToString(ofGetHeight())));
+    gui.add(startTime.setup("started",  ofToString(ofGetHours()) + ":" + 
+                                    ofToString(ofGetMinutes()) + ":" +
+                                    ofToString(ofGetSeconds())));
+    gui.add(currentTime.setup("now",  ofToString(ofGetHours()) + ":" + 
+                                    ofToString(ofGetMinutes()) + ":" +
+                                    ofToString(ofGetSeconds())));
 
     // load settings at startup
     gui.loadFromFile("settings.xml");
@@ -85,7 +91,9 @@ void ofApp::update(){
     plane.set(_planeScaleX, _planeScaleY);   ///dimensions for width and height in pixels
     plane.setPosition(_planePosX, _planePosY, 0); /// position in x y z
     //plane.mapTexCoords(_planePosX, _planePosY, _planePosX+_planeScaleX, _planePosY+_planeScaleY);
-
+    currentTime.setup("now",  ofToString(ofGetHours()) + ":" + 
+                                    ofToString(ofGetMinutes()) + ":" +
+                                    ofToString(ofGetSeconds()));
 }
 
 //--------------------------------------------------------------

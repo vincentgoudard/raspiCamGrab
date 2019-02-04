@@ -3,11 +3,11 @@
 	<scalebias>1, 0</scalebias>
 	<color>100, 100, 140, 255</color>
 	<hue>0</hue>
-	<saturation>0.92</saturation>
-	<brightness>1.36</brightness>
-	<contrast>0.74</contrast>
-	<posX>-72</posX>
-	<posY>-88</posY>
-	<scaleX>1292.8</scaleX>
-	<scaleY>630</scaleY>
+	<saturation>1</saturation>
+	<brightness>1</brightness>
+	<contrast>1</contrast>
+	<posX>0</posX>
+	<posY>0</posY>
+	<scaleX>1920</scaleX>
+	<scaleY>1200</scaleY>
 </group>
