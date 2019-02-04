@@ -2,6 +2,7 @@
 precision highp float;
 
 uniform vec2 resolution;
+varying vec2 texCoordVarying;
 uniform sampler2D tex0;
 uniform vec4 vHSVC;
 
@@ -25,7 +26,8 @@ vec3 hsv2rgb(vec3 c)
 }
 
 void main() {
-    vec4 textureColor = texture2D(tex0, (gl_FragCoord.xy)/resolution.xy);
+    //vec4 textureColor = texture2D(tex0, (gl_FragCoord.xy)/resolution.xy);
+    vec4 textureColor = texture2D(tex0, texCoordVarying);
     vec3 fragRGB = textureColor.rgb;
     vec3 fragHSV = rgb2hsv(fragRGB).xyz;
     fragHSV.x += mod(vHSVC.x, 1.0);
