@@ -53,6 +53,9 @@ class ofApp : public ofBaseApp{
         ofxFloatSlider _saturation;
         ofxFloatSlider _brightness;
         ofxFloatSlider _contrast;
+        ofxFloatSlider _Rgain;
+        ofxFloatSlider _Ggain;
+        ofxFloatSlider _Bgain;
         ofxFloatSlider _planePosX;
         ofxFloatSlider _planePosY;
         ofxFloatSlider _planeScaleX;
@@ -61,9 +64,12 @@ class ofApp : public ofBaseApp{
         ofxLabel screenSize;
         ofxLabel startTime;
         ofxLabel currentTime;
+        ofxLabel frozenFrameCountLabel;
         ofxPanel gui;
         
         //for snapshots
         ofImage snapshot;
+        
+        int frozenFramesCount;
         
 };

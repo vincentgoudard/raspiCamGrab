@@ -14,6 +14,8 @@ void ofApp::setup(){
 	}
     #endif
     
+    frozenFramesCount = 0; //for debug
+    
     camWidth = 1600;  // try to grab at this size.
     camHeight = 1200;
  
@@ -27,7 +29,9 @@ void ofApp::setup(){
     
     ofBackground(0, 0, 0);
     ofHideCursor();
-    
+  
+  // send a single string message, setting the log level
+    ofLog(OF_LOG_NOTICE, "******************** Hello world of grabbers! ************************");  
     
     ////////// WEBCAM SETTINGS /////////////////////
     //get back a list of devices.
@@ -54,6 +58,11 @@ void ofApp::setup(){
     gui.add(_saturation.setup("saturation", 1., 0., 1.));
     gui.add(_brightness.setup("brightness", 1., 0., 2.));
     gui.add(_contrast.setup("contrast", 1., 0., 2.));
+ 
+    gui.add(_Rgain.setup("Red", 1., 0., 2.));
+    gui.add(_Ggain.setup("Green", 1., 0., 2.));
+    gui.add(_Bgain.setup("Blue", 1., 0., 2.));
+ 
     gui.add(_planePosX.setup("posX", 0, -100, 100));
     gui.add(_planePosY.setup("posY", 0, -100, 100));
     gui.add(_planeScaleX.setup("scaleX", 1640, 800, screenX));
@@ -66,6 +75,7 @@ void ofApp::setup(){
     gui.add(currentTime.setup("now",  ofToString(ofGetHours()) + ":" + 
                                     ofToString(ofGetMinutes()) + ":" +
                                     ofToString(ofGetSeconds())));
+    gui.add(frozenFrameCountLabel.setup("frozenFrameCountLabel", ofToString(frozenFramesCount)));
 
     // load settings at startup
     gui.loadFromFile("settings.xml");
@@ -81,19 +91,41 @@ void ofApp::setup(){
     plane.setResolution(2, 2); /// this resolution (as columns and rows) is enough
     //plane.mapTexCoords(0, camHeight/10, camWidth, 0);
     
+    
 }
 
 
-//--------------------------------------------------------------
+//--------------------------------------------------------------ss
 void ofApp::update(){
 
     vidGrabber.update();
-    plane.set(_planeScaleX, _planeScaleY);   ///dimensions for width and height in pixels
-    plane.setPosition(_planePosX, _planePosY, 0); /// position in x y z
-    //plane.mapTexCoords(_planePosX, _planePosY, _planePosX+_planeScaleX, _planePosY+_planeScaleY);
-    currentTime.setup("now",  ofToString(ofGetHours()) + ":" + 
-                                    ofToString(ofGetMinutes()) + ":" +
-                                    ofToString(ofGetSeconds()));
+    
+    if(vidGrabber.isFrameNew()){
+        if(!bHide){
+            plane.set(_planeScaleX, _planeScaleY);   ///dimensions for width and height in pixels
+            plane.setPosition(_planePosX, _planePosY, 0); /// position in x y z
+            //plane.mapTexCoords(_planePosX, _planePosY, _planePosX+_planeScaleX, _planePosY+_planeScaleY);
+            currentTime.setup("now",    ofToString(ofGetHours()) + ":" + 
+                                        ofToString(ofGetMinutes()) + ":" +
+                                        ofToString(ofGetSeconds()));
+        }
+        frozenFramesCount = 0;
+    }
+    else {
+        frozenFramesCount += 1;
+        frozenFrameCountLabel.setup("frozenFrameCountLabel", ofToString(frozenFramesCount));
+   }
+    
+    if (frozenFramesCount >= 10){
+        ofLog(OF_LOG_NOTICE,    ofToString(ofGetHours()) + ":" + 
+                                ofToString(ofGetMinutes()) + ":" +
+                                ofToString(ofGetSeconds()) + " - frozenFrameCount : " +
+                                ofToString(frozenFramesCount));
+        if (frozenFramesCount >= 200){
+            ofLog(OF_LOG_NOTICE, "!!!!!!!!!!!!!!!!!! Frozen camera, exiting !!!!!!!!!!!!!!!!!!!!!");
+            ofExit();
+        }
+    }
 }
 
 //--------------------------------------------------------------
@@ -109,6 +141,7 @@ void ofApp::draw(){
     shader.begin();
     
     // pass the parameters
+    shader.setUniform3f("RGBgains", _Rgain, _Ggain, _Bgain);
     shader.setUniform4f("vHSVC", _hue, _saturation, _brightness, _contrast);
     shader.setUniform2f("resolution", ofGetWidth(), ofGetHeight());
 
@@ -125,7 +158,7 @@ void ofApp::draw(){
     
     
     /////////////////////////////////////////////////////
-    ofSetHexColor(0xffffff);
+    //ofSetHexColor(0xffffff);
     
     // this is a shortcut if we jut do direct rendering to the window without using shaders
     // vidGrabber.draw(startX, startY, camDisplayX, camDisplayY);
@@ -166,6 +199,9 @@ void ofApp::keyPressed(int key){
     }
     else if(key == ' '){
 	    color = ofColor(255);
+    }
+    else if(key == 'q'){
+	    ofExit();
     }
     else if(key == 'x'){
         snapshot.grabScreen(0, 0 , ofGetWidth(), ofGetHeight());

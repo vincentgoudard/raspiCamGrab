@@ -9,7 +9,7 @@ int main( ){
 	ofGLESWindowSettings settings;
 	settings.glesVersion = 2;
 	settings.setSize(1920,1200);
-
+	//settings.setSize(640,480);
 	ofCreateWindow(settings);
 
 	// this kicks off the running of my app

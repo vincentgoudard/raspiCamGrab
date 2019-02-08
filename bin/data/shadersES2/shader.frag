@@ -5,7 +5,7 @@ uniform vec2 resolution;
 varying vec2 texCoordVarying;
 uniform sampler2D tex0;
 uniform vec4 vHSVC;
-
+uniform vec3 RGBgains;
 
 vec3 rgb2hsv(vec3 c)
 {
@@ -36,7 +36,7 @@ void main() {
 
     fragRGB = hsv2rgb(fragHSV);
     
-    fragRGB = (fragRGB - 0.5) * vHSVC.w + 0.5;
+    fragRGB = RGBgains * ((fragRGB - 0.5) * vHSVC.w + 0.5);
     
     gl_FragColor = vec4(fragRGB, textureColor.w);
 } 
