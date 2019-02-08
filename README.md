@@ -11,11 +11,11 @@ It should match an A3 paper with a 24" display.
 ### Expected Behavior
 
 The camera should just show up with the settings stored in `/bin/data/settings.xml`.
-Press <kbd>h</kdb> to display/hide mouse and image adjustments (mouse control only).
-Press <kbd>s</kdb> to save image adjustments in `/bin/data/settings.xml`.
-Press <kbd>l</kdb> to (re)load image adjustments from `/bin/data/settings.xml`.
-Press <kbd>s</kdb> to capture a snapshot in `/bin/data/screenshot.png`
-Press <kbd>Esc</kdb> to exit.
+Press <kbd>h</kbd> to display/hide mouse and image adjustments (mouse control only).
+Press <kbd>s</kbd> to save image adjustments in `/bin/data/settings.xml`.
+Press <kbd>l</kbd> to (re)load image adjustments from `/bin/data/settings.xml`.
+Press <kbd>s</kbd> to capture a snapshot in `/bin/data/screenshot.png`
+Press <kbd>Esc</kbd> to exit.
 
 ### Other classes used in this file
 
@@ -29,4 +29,4 @@ then **remove** `console=tty1` (setting it to tty3, as recommanded by some didn'
 
 Beware that incorrect syntax might result in boot failure!
 
-Also, if not starting X11, the above doesn't yield a login prompt in tty1. A workaround is to switch to another console with the command <kbd>alt</kdb>+<kbd>shift</kdb>+<kbd>F2</kdb>, then back to tty1 with <kbd>alt</kdb>+<kbd>shift</kdb>+<kbd>F1</kdb>.
+Also, if not starting X11, the above doesn't yield a login prompt in tty1. A workaround is to switch to another console with the command <kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>F2</kbd>, then back to tty1 with <kbd>alt</kbd>+<kbd>shift</kbd>+<kbd>F1</kbd>.
