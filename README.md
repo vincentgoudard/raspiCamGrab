@@ -10,8 +10,12 @@ It should match an A3 paper with a 24" display.
 
 ### Expected Behavior
 
-The image should just show up.
-No interaction.
+The camera should just show up with the settings stored in `/bin/data/settings.xml`.
+Press <kbd>h</kdb> to display/hide mouse and image adjustments (mouse control only).
+Press <kbd>s</kdb> to save image adjustments in `/bin/data/settings.xml`.
+Press <kbd>l</kdb> to (re)load image adjustments from `/bin/data/settings.xml`.
+Press <kbd>s</kdb> to capture a snapshot in `/bin/data/screenshot.png`
+Press <kbd>Esc</kdb> to exit.
 
 ### Other classes used in this file
 
