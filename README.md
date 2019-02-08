@@ -25,11 +25,9 @@ This example uses no other classes.
 ### Hiding boot sequence
 There are various recommandations for hiding the boot sequence. Here's what worked for me, by editing the file /boot/cmdline.txt on a raspberry Pi 3 Model B+, running raspbian stretch :
 
-sudo nano /boot/cmdline.txt
-
-then **remove** `console=tty1` (setting it to tty3, as recommanded by some didn't work here) 
-
-and add `logo.nologo quiet` at the end.
+- type `sudo nano /boot/cmdline.txt` in a shell
+- then **remove** `console=tty1` (setting it to tty3, as recommanded by some didn't work here) 
+- and add `logo.nologo quiet` at the end.
 
 Beware that incorrect syntax might result in boot failure!
 
