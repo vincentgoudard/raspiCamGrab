@@ -2,7 +2,7 @@
 
 ![Screenshot of raspiCamGrab](screenshot.png)
 
-### What??
+## What??
 
 raspiCamGrab is a program that displays a USB camera (namely a supereyes B008 microscope, here) onto a screen.
 The image can be scaled and moved on X and Y axes.
@@ -13,7 +13,7 @@ Image adjustment is applied with a dedicated shader and allows the following eff
 - Red/Green/Blue gains
 - contrast
 
-### Expected Behavior
+## Expected Behavior
 
 The camera should just show up with the settings stored in `/bin/data/settings.xml`.
 
@@ -23,11 +23,18 @@ The camera should just show up with the settings stored in `/bin/data/settings.x
 - Press <kbd>s</kbd> to capture a snapshot in `/bin/data/screenshot.png`
 - Press <kbd>Esc</kbd> to exit.
 
-### Other classes used in this file
+## Installation
+### Install raspbian and openframeworks
+Follow the instructions on [OF website](https://openframeworks.cc/setup/raspberrypi/)
 
-This example uses no other classes.
+### Clone or download raspiCamGrab
+And put the sources in a folder named `(whatever_OF_path)/openFrameworks/apps/myApps/raspiCamGrab`
 
-### Hiding boot sequence
+### Compile the source and run it
+Open a command line and switch to that folder, then type `make`.
+Once compiled, run the app by either typing `make RunRelease` or by launching the app in `./bin/raspiCamGrab`.
+
+## Hiding boot sequence
 There are various recommandations for hiding the boot sequence. Here's what worked for me, by editing the file /boot/cmdline.txt on a raspberry Pi 3 Model B+, running raspbian stretch :
 
 - type `sudo nano /boot/cmdline.txt` in a shell
