@@ -11,11 +11,12 @@ It should match an A3 paper with a 24" display.
 ### Expected Behavior
 
 The camera should just show up with the settings stored in `/bin/data/settings.xml`.
-Press <kbd>h</kbd> to display/hide mouse and image adjustments (mouse control only).
-Press <kbd>s</kbd> to save image adjustments in `/bin/data/settings.xml`.
-Press <kbd>l</kbd> to (re)load image adjustments from `/bin/data/settings.xml`.
-Press <kbd>s</kbd> to capture a snapshot in `/bin/data/screenshot.png`
-Press <kbd>Esc</kbd> to exit.
+
+- Press <kbd>h</kbd> to display/hide mouse and image adjustments (mouse control only).
+-  Press <kbd>s</kbd> to save image adjustments in `/bin/data/settings.xml`.
+- Press <kbd>l</kbd> to (re)load image adjustments from `/bin/data/settings.xml`.
+- Press <kbd>s</kbd> to capture a snapshot in `/bin/data/screenshot.png`
+- Press <kbd>Esc</kbd> to exit.
 
 ### Other classes used in this file
 
@@ -25,7 +26,10 @@ This example uses no other classes.
 There are various recommandations for hiding the boot sequence. Here's what worked for me, by editing the file /boot/cmdline.txt on a raspberry Pi 3 Model B+, running raspbian stretch :
 
 sudo nano /boot/cmdline.txt
-then **remove** `console=tty1` (setting it to tty3, as recommanded by some didn't work here) and add `logo.nologo quiet` at the end.
+
+then **remove** `console=tty1` (setting it to tty3, as recommanded by some didn't work here) 
+
+and add `logo.nologo quiet` at the end.
 
 Beware that incorrect syntax might result in boot failure!
 
