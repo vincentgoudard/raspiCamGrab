@@ -4,9 +4,14 @@
 
 ### What??
 
-raspiCamGrab is a program that displays the camera (namely a supereyes microscope) onto a screen.
-The image is formatted so that it matches a A3 paper format.
-It should match an A3 paper with a 24" display.
+raspiCamGrab is a program that displays a USB camera (namely a supereyes B008 microscope, here) onto a screen.
+The image can be scaled and moved on X and Y axes.
+Image adjustment is applied with a dedicated shader and allows the following effects :
+- hue
+- saturation
+- brightness
+- Red/Green/Blue gains
+- contrast
 
 ### Expected Behavior
 
