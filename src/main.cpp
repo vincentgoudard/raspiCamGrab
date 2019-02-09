@@ -8,7 +8,8 @@ int main( ){
 
 	ofGLESWindowSettings settings;
 	settings.glesVersion = 2;
-	settings.setSize(1920,1200);
+	settings.setSize(1680, 1050);
+	//settings.setSize(1920,1200);
 	//settings.setSize(640,480);
 	ofCreateWindow(settings);
 
